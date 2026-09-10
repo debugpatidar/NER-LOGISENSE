@@ -1,0 +1,104 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  FIELD_OFFICER
+  LOGISTICS_OPERATOR
+  CARRIER
+}
+
+enum IncidentCategory {
+  LANDSLIDE
+  ROAD_DAMAGE
+  FLOODING
+  BRIDGE_HAZARD
+  CHECKPOINT_DELAY
+  WEATHER_ALERT
+}
+
+enum IncidentSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum IncidentStatus {
+  ACTIVE
+  INVESTIGATING
+  RESOLVED
+}
+
+enum LocationSource {
+  GPS
+  MAP_MANUAL
+}
+
+enum MediaType {
+  PHOTO
+  VIDEO
+}
+
+model User {
+  id           String          @id @default(cuid())
+  name         String
+  email        String          @unique
+  passwordHash String
+  role         Role
+  incidents    FieldIncident[]
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+}
+
+model FieldIncident {
+  id                 String           @id @default(cuid())
+  clientIncidentId   String?          @unique
+  title              String
+  description        String
+  state              String
+  locationName       String
+  latitude           Float
+  longitude          Float
+  locationAccuracy   Float?
+  locationSource     LocationSource   @default(MAP_MANUAL)
+  locationCapturedAt DateTime?
+  category           IncidentCategory
+  severity           IncidentSeverity
+  status             IncidentStatus   @default(ACTIVE)
+  officerId          String
+  officer            User             @relation(fields: [officerId], references: [id], onDelete: Cascade)
+  media              IncidentMedia[]
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+
+  @@index([state])
+  @@index([status])
+  @@index([severity])
+  @@index([category])
+  @@index([createdAt])
+}
+
+
+model IncidentMedia {
+  id          String        @id @default(cuid())
+  incidentId  String
+  incident    FieldIncident @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+  type        MediaType
+  url         String
+  filename    String
+  mimeType    String
+  size        Int
+  createdAt   DateTime      @default(now())
+
+  @@index([incidentId])
+  @@index([type])
+}

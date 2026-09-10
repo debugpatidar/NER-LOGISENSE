@@ -1,0 +1,21 @@
+{
+  "name": "NER-SHIELD Field Officer Portal",
+  "short_name": "NER-SHIELD FO",
+  "description": "NER-SHIELD Field Officer incident reporting and operations portal for Northeast Railway logistics safety.",
+  "start_url": "/dashboard/field",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F8FAFC",
+  "theme_color": "#2563EB",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities"],
+  "lang": "en"
+}

@@ -1,26 +1,78 @@
 @import "tailwindcss";
 
+/* ── Design Tokens (Light-only) ──────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --accent: #2563EB;
+  --accent-hover: #1D4ED8;
+  --accent-secondary: #0891B2;
+  --bg: #F8FAFC;
+  --surface: #FFFFFF;
+  --surface-raised: #EFF6FF;
+  --surface-card: #FFFFFF;
+  --border: #E2E8F0;
+  --border-subtle: #F1F5F9;
+  --text-primary: #172033;
+  --text-secondary: #64748B;
+  --text-muted: #94A3B8;
+  --success: #16A34A;
+  --warning: #F59E0B;
+  --error: #DC2626;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ── Editorial / Serif font helper ──────────────────────────────────────── */
+.font-editorial {
+  font-family: var(--font-serif), 'Newsreader', Georgia, serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Box model ───────────────────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+  /* Force light colour scheme — prevents any system-dark-mode bleeding */
+  color-scheme: light;
+}
+
+/* ── Base typography ─────────────────────────────────────────────────────── */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #F8FAFC;
+  color: #172033;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+/* ── Scrollbars (light) ──────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F8FAFC;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 3px;
+  border: 1px solid #E2E8F0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2563EB;
+}
+
+/* ── Text selection ──────────────────────────────────────────────────────── */
+::selection {
+  background: rgba(37, 99, 235, 0.15);
+  color: #172033;
+}
+
+/* ── Focus ring ──────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
